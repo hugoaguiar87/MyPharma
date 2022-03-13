@@ -2,10 +2,14 @@ import express, { Request, Response, ErrorRequestHandler } from "express";
 import path from "path";
 import cors from "cors";
 import dotenv from "dotenv";
+import passport from "passport";
 
+import { mongoConnect } from "./instances/mongodb";
 import mainRoutes from "./routes/route";
 
 dotenv.config()
+
+mongoConnect()
 
 const server = express()
 
@@ -13,6 +17,8 @@ server.use(cors())
 
 server.use(express.static(path.join(__dirname, '../public')))
 server.use(express.urlencoded({ extended: true }))
+
+server.use(passport.initialize())
 
 server.use('/api', mainRoutes)
 
