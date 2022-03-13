@@ -7,6 +7,8 @@ const router = Router()
 
 router.get('/ping', testController.pong)
 
-router.get('/singup', userController.singup)
+router.post('/singup', userController.singup)
+router.post('/singin', userController.singin)
+
 
 export default router;

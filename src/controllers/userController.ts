@@ -34,3 +34,30 @@ export const singup = async (req: Request, res: Response) => {
 
     res.json({error: "Dados incompletos"})
 }
+
+export const singin = async (req: Request, res: Response) => {
+    if(req.body.email && req.body.password){
+        let { email, password } = req.body
+
+        if(!validator.isEmail(email)){
+            return res.json({error: "Não é um email válido"})
+        }
+
+        let user = await User.findOne({ email })
+        if(!user){
+            return res.json({error: "Email não cadastrado!"})
+        } else {
+            const match = await bcrypt.compare(password, user.password)
+
+            if(!match){
+                return res.json({error: "Senha incorreta!"})
+            } else {
+                const token = generateToken({ id: user._id, email: user.email })
+
+                return res.json({status: true, token})
+            }
+        }
+    }
+
+    res.json({error: "Dados incompletos"})
+}
