@@ -14,6 +14,8 @@ router.post('/singup', userController.singup)
 router.post('/singin', userController.singin)
 
 router.post('/category/create', privateRoute, productCategoryController.createProductCategory)
+router.put('/category/edit', privateRoute, productCategoryController.editProductCategory)
+
 
 
 export default router;
