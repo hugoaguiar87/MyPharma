@@ -103,3 +103,20 @@ export const editProduct = async (req: Request, res: Response) => {
 
     res.json({error: "Não autorizado"})
 }
+
+export const deleteProduct = async (req: Request, res: Response) => {
+    if(req.headers.authorization){
+        const { idProduct } = req.body
+
+        let product = await Product.findById(idProduct)
+
+        if(product){
+            await product.remove()
+            return res.json({status: true})
+        } else {
+            return res.json({ error: "Produto não encontrado"})
+        }
+    }
+
+    res.json({error: "Não autorizado"})
+}

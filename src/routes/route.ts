@@ -27,6 +27,7 @@ router.delete('/brand/delete', privateRoute, brandController.deleteBrand)
 
 router.post('/product/create', privateRoute, productController.createProduct)
 router.put('/product/edit', privateRoute, productController.editProduct)
+router.delete('/product/delete', privateRoute, productController.deleteProduct)
 
 
 
