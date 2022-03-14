@@ -5,6 +5,7 @@ import { privateRoute } from "../config/authConfig";
 import * as testController from "../controllers/testController";
 import * as userController from "../controllers/userController";
 import * as productCategoryController from "../controllers/productCategoryController";
+import * as brandController from "../controllers/brandController";
 
 const router = Router()
 
@@ -17,6 +18,8 @@ router.get('/categories', productCategoryController.getCategories)
 router.post('/category/create', privateRoute, productCategoryController.createProductCategory)
 router.put('/category/edit', privateRoute, productCategoryController.editProductCategory)
 router.delete('/category/delete', privateRoute, productCategoryController.deleteProductCategory)
+
+router.post('/brand/create', privateRoute, brandController.createBrand)
 
 
 

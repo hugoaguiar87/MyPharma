@@ -1,11 +1,7 @@
 import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
 
-import User, {UserType} from "../models/User";
 import ProductCategory from "../models/ProductCategory";
 
-dotenv.config()
 
 export const createProductCategory = async (req: Request, res: Response) => {
     if(req.headers.authorization){
