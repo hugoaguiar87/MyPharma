@@ -13,6 +13,7 @@ router.get('/ping', testController.pong)
 router.post('/singup', userController.singup)
 router.post('/singin', userController.singin)
 
+router.get('/categories', productCategoryController.getCategories)
 router.post('/category/create', privateRoute, productCategoryController.createProductCategory)
 router.put('/category/edit', privateRoute, productCategoryController.editProductCategory)
 router.delete('/category/delete', privateRoute, productCategoryController.deleteProductCategory)

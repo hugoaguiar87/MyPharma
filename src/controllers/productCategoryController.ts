@@ -67,3 +67,27 @@ export const deleteProductCategory = async (req: Request, res: Response) => {
 
     res.json({error: "Não autorizado"})
 }
+
+export const getCategories = async (req: Request, res: Response) => {
+    let { sort = "asc", offset = 0, limit = 20, searchName, searchDescription } = req.query
+    let filters = {} as any
+    let total = 0
+
+    if(searchName){
+        filters.name = {'$regex': searchName, '$options': 'i'}
+    }
+
+    if(searchDescription){
+        filters.description = {'$regex': searchDescription, '$options': 'i'}
+    }
+
+    const categoriesTotal = await ProductCategory.find(filters)
+    total = categoriesTotal.length
+
+    const categories = await ProductCategory.find(filters)
+        .sort({ name: ( sort=='desc'?-1:1 ) })
+        .skip(Number(offset))
+        .limit(Number(limit))
+
+    return res.json({ categories, total })
+}
