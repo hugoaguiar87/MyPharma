@@ -6,6 +6,7 @@ import * as testController from "../controllers/testController";
 import * as userController from "../controllers/userController";
 import * as productCategoryController from "../controllers/productCategoryController";
 import * as brandController from "../controllers/brandController";
+import * as productController from "../controllers/productController";
 
 const router = Router()
 
@@ -23,6 +24,8 @@ router.get('/brands', brandController.getBrands)
 router.post('/brand/create', privateRoute, brandController.createBrand)
 router.put('/brand/edit', privateRoute, brandController.editBrand)
 router.delete('/brand/delete', privateRoute, brandController.deleteBrand)
+
+router.post('/product/create', privateRoute, productController.createProduct)
 
 
 
