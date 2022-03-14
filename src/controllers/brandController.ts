@@ -38,3 +38,20 @@ export const editBrand = async (req: Request, res: Response) => {
 
     res.json({error: "Não autorizado"})
 }
+
+export const deleteBrand = async (req: Request, res: Response) => {
+    if(req.headers.authorization){
+        const { idBrand } = req.body
+
+        let brand = await Brand.findById(idBrand)
+
+        if(brand){
+            await brand.remove()
+            return res.json({status: true})
+        } else {
+            return res.json({error: "Marca não encontrada"})
+        }
+    }
+
+    res.json({error: "Não autorizado"})
+}
