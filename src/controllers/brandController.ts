@@ -55,3 +55,24 @@ export const deleteBrand = async (req: Request, res: Response) => {
 
     res.json({error: "Não autorizado"})
 }
+
+export const getBrands = async (req: Request, res: Response) => {
+    let { sort = "asc", offset = 0, limit = 20, search } = req.query
+    let filters = {} as any
+    let total = 0
+
+    if(search){
+        filters.name = {'$regex': search, '$options': 'i'}
+    }
+
+    const brandsTotal = await Brand.find(filters)
+    total = brandsTotal.length
+
+    const brands = await Brand.find(filters)
+        .sort({ name: ( sort=='desc'?-1:1 ) })
+        .skip(Number(offset))
+        .limit(Number(limit))
+
+    return res.json({ brands, total })
+
+}
