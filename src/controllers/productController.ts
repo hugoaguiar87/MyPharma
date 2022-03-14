@@ -53,3 +53,53 @@ export const createProduct = async (req: Request, res: Response) => {
 
     res.json({error: "Não autorizado"})
 }
+
+export const editProduct = async (req: Request, res: Response) => {
+    if(req.headers.authorization){
+        const { idProduct, newName, newDescription, newPrice, newStock, newCategory, newBrand } = req.body
+
+        let product = await Product.findById(idProduct)
+
+        if(product){
+            if(newName){
+                product.name = newName
+            }
+
+            if(newDescription){
+                product.description = newDescription
+            }
+
+            if(newPrice){
+                product.price = newPrice
+            }
+
+            if(newStock){
+                product.stock = newStock
+            }
+
+            if(newCategory){
+                let categoryIsValid = await ProductCategory.findById(newCategory)
+                if(!categoryIsValid){
+                    return res.json({error: "Categoria inválida"})
+                }
+                product.category = newCategory
+            }
+
+            if(newBrand){
+                let brandIsValid = await Brand.findById(newBrand)
+                if(!brandIsValid){
+                    return res.json({error: "Marca inválida"})
+                }
+                product.brand = newBrand
+            }
+
+            await product.save()
+            return res.json({status: true})
+
+        } else {
+            return res.json({error: "Produto não encontrado"})
+        }
+    }
+
+    res.json({error: "Não autorizado"})
+}
