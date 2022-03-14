@@ -29,8 +29,6 @@ export const createProductCategory = async (req: Request, res: Response) => {
 
 export const editProductCategory = async (req: Request, res: Response) => {
     if(req.headers.authorization){
-        const [type, token] = req.headers.authorization.split(" ")
-        const tokenDecoded = jwt.verify(token, process.env.JWT_SECRET as string) as any
         const { idCategory, newName, newDescription } = req.body
 
         let productCategory = await ProductCategory.findById(idCategory)
@@ -49,7 +47,22 @@ export const editProductCategory = async (req: Request, res: Response) => {
         } else {
             return res.json({ error: "Categoria não encontrada" })
         }
+    }
 
+    res.json({error: "Não autorizado"})
+}
+
+export const deleteProductCategory = async (req: Request, res: Response) => {
+    if(req.headers.authorization){
+        const { idCategory } = req.body
+        let productCategory = await ProductCategory.findById(idCategory)
+
+        if(productCategory){
+            productCategory.remove()
+            return res.json({status: true})
+        } else {
+            return res.json({ error: "Categoria não encontrada" })
+        }
     }
 
     res.json({error: "Não autorizado"})
