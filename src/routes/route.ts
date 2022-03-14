@@ -20,6 +20,7 @@ router.put('/category/edit', privateRoute, productCategoryController.editProduct
 router.delete('/category/delete', privateRoute, productCategoryController.deleteProductCategory)
 
 router.post('/brand/create', privateRoute, brandController.createBrand)
+router.put('/brand/edit', privateRoute, brandController.editBrand)
 
 
 
