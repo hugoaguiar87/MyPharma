@@ -26,7 +26,7 @@ export const singup = async (req: Request, res: Response) => {
             password: passwordHash,
             name
         })
-        const token = generateToken({ id: newUser._id, email: newUser.email })
+        const token = generateToken({ _id: newUser._id, email: newUser.email })
 
         res.status(201)
         return res.json({id: newUser._id, email: newUser.email, token})
@@ -52,7 +52,7 @@ export const singin = async (req: Request, res: Response) => {
             if(!match){
                 return res.json({error: "Senha incorreta!"})
             } else {
-                const token = generateToken({ id: user._id, email: user.email })
+                const token = generateToken({ _id: user._id, email: user.email })
 
                 return res.json({status: true, token})
             }
