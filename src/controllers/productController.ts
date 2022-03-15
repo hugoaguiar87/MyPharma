@@ -120,3 +120,51 @@ export const deleteProduct = async (req: Request, res: Response) => {
 
     res.json({error: "Não autorizado"})
 }
+
+export const getProducts = async (req: Request, res: Response) => {
+    let { sort = "asc", offset = 0, limit = 20, searchName, searchDescription, brand, category } = req.query
+    let filters = {} as any
+    let total = 0
+
+    if(searchName){
+        filters.name = {'$regex': searchName, '$options': 'i'}
+    }
+
+    if(searchDescription){
+        filters.description = {'$regex': searchDescription, '$options': 'i'}
+    }
+
+    if(brand){
+        filters.brand = brand
+    }
+
+    if(category){
+        filters.category = category
+    }
+
+    const productsTotal = await Product.find(filters)
+    total = productsTotal.length 
+
+    const productsData = await Product.find(filters)
+        .sort({ name: ( sort=='desc'?-1:1 ) })
+        .skip(Number(offset))
+        .limit(Number(limit))
+    let products = []
+
+    for( let i =0; i<productsData.length; i++){
+        let fullCategory = await ProductCategory.findById(productsData[i].category)
+        let fullBrand = await Brand.findById(productsData[i].brand)
+
+        products.push({
+            _id: productsData[i]._id,
+            name: productsData[i].name,
+            description: productsData[i].description,
+            price: productsData[i].price,
+            stock: productsData[i].stock,
+            category: fullCategory,
+            brand: fullBrand
+        })
+    }
+
+    res.json({ products, total })
+}
