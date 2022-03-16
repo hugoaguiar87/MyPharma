@@ -12,8 +12,8 @@ const router = Router()
 
 router.get('/ping', testController.pong)
 
-router.post('/singup', userController.singup)
-router.post('/singin', userController.singin)
+router.post('/signup', userController.signup)
+router.post('/signin', userController.signin)
 
 router.get('/categories', productCategoryController.getCategories)
 router.post('/category/create', privateRoute, productCategoryController.createProductCategory)

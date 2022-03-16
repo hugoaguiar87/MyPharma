@@ -6,7 +6,7 @@ import { generateToken } from "../config/authConfig";
 
 import User from "../models/User";
 
-export const singup = async (req: Request, res: Response) => {
+export const signup = async (req: Request, res: Response) => {
     if( req.body.name && req.body.email && req.body.password ) {
         let { name, email, password } = req.body
 
@@ -35,7 +35,7 @@ export const singup = async (req: Request, res: Response) => {
     res.json({error: "Dados incompletos"})
 }
 
-export const singin = async (req: Request, res: Response) => {
+export const signin = async (req: Request, res: Response) => {
     if(req.body.email && req.body.password){
         let { email, password } = req.body
 

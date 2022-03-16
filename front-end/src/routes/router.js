@@ -6,6 +6,7 @@ import Footer from "../components/partials/Footer";
 import Header from "../components/partials/Header";
 import Home from "../pages/Home";
 import Dashboard from "../pages/Dashboard";
+import SignUp from "../pages/SignUp";
 
 
 const Router = () => {
@@ -22,6 +23,7 @@ const Router = () => {
 
             <Routes>
                 <Route path="/" element= { <Home/> } />
+                <Route path="/signup" element= { <SignUp/> } />
                 <Route path="/dashboard" element= { <PrivateRoute> <Dashboard/> </PrivateRoute> } />
             </Routes>
 
