@@ -1,10 +1,15 @@
 import React from "react";
-import { isLogged } from "../../../helpers/AuthHandler";
+import { doLogout, isLogged } from "../../../helpers/AuthHandler";
 
 import { HeaderArea } from "./styled";
 
 const Header = () => {
     const logged = isLogged()
+
+    const handleLogout = () => {
+        doLogout()
+        window.location.href = '/'
+    }
 
     return (
         <HeaderArea>
@@ -14,7 +19,7 @@ const Header = () => {
                     <span className="logo--last">Pharma</span>
                 </div>
                 {logged ? 
-                    <button>Sair</button>
+                    <button onClick={handleLogout}>Sair</button>
                     :
                     ""
                 }
