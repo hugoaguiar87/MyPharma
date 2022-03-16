@@ -12,8 +12,10 @@ const router = Router()
 
 router.get('/ping', testController.pong)
 
+router.get('/me', privateRoute ,userController.getUserInfos)
 router.post('/signup', userController.signup)
 router.post('/signin', userController.signin)
+router.put('/me/edit', privateRoute, userController.editUser)
 
 router.get('/categories', productCategoryController.getCategories)
 router.post('/category/create', privateRoute, productCategoryController.createProductCategory)

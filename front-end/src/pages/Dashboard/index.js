@@ -45,11 +45,10 @@ const Dashboard = () => {
                         </div>
                     </div>
 
-                    <div className="categ--area" onClick={ () => navigate('/') }>
-                        <h3>USUÁRIOS</h3>
+                    <div className="categ--area" onClick={ () => navigate('/user') }>
+                        <h3>MINHA CONTA</h3>
                         <div className="desciption">
                             <ul>
-                                <li>Cadastrar</li>
                                 <li>Editar</li>
                                 <li>Excluir</li>
                             </ul>

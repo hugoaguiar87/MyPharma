@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import validator from "validator";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 import { generateToken } from "../config/authConfig";
 
-import User from "../models/User";
+import User, { UserType } from "../models/User";
 
 export const signup = async (req: Request, res: Response) => {
     if( req.body.name && req.body.email && req.body.password ) {
@@ -60,4 +61,60 @@ export const signin = async (req: Request, res: Response) => {
     }
 
     res.json({error: "Dados incompletos"})
+}
+
+export const getUserInfos = async (req: Request, res: Response) => {
+    if(req.headers.authorization){
+        const [type, token] = req.headers.authorization.split(" ")
+        const tokenDecoded = jwt.verify(token, process.env.JWT_SECRET as string) as any
+
+        const user = await User.findById(tokenDecoded._id)
+
+        return res.json({user})
+    }
+
+    res.json({error: "Não autorizado"})
+}
+
+export const editUser = async (req: Request, res: Response) => {
+    if(req.headers.authorization){
+        const [type, token] = req.headers.authorization.split(" ")
+        const tokenDecoded = jwt.verify(token, process.env.JWT_SECRET as string) as any
+        let user = await User.findById(tokenDecoded._id)
+        const {name, email, password} = req.body
+
+        if(user){
+            if(name){
+                user.name = name
+            }
+
+            if(email && !validator.isEmail(email)){
+                return res.json({error: "Email inválido!"})
+            }
+
+            if(email && validator.isEmail(email)){
+                let emailExist = await User.findOne({ email })
+                if(emailExist){ 
+                    return res.json({ error: "Email já cadastrado" }) 
+                }
+
+                user.email = email
+            }
+
+            if(password){
+                let passwordHash = await bcrypt.hash(password, 12)
+                user.password = passwordHash
+            }
+
+            if(!name && !email && !password){
+                return res.json({message: "Nenhum dado enviado"})
+            }
+
+            await user.save()
+
+            return res.json({status: true})
+        }
+    }
+
+    res.json({error: "Não autorizado"})
 }

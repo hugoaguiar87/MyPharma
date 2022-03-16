@@ -8,9 +8,6 @@ export const PageArea = styled.div`
 export const DashArea = styled.div`
     max-width: 1200px;
     margin: auto;
-    /* height: 80vh; */
-    /* display: flex;
-    flex-direction: column; */
 
     h1{
         margin: 0;

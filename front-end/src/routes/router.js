@@ -7,6 +7,7 @@ import Header from "../components/partials/Header";
 import Home from "../pages/Home";
 import Dashboard from "../pages/Dashboard";
 import SignUp from "../pages/SignUp";
+import Users from "../pages/Users";
 
 
 const Router = () => {
@@ -25,6 +26,7 @@ const Router = () => {
                 <Route path="/" element= { <Home/> } />
                 <Route path="/signup" element= { <SignUp/> } />
                 <Route path="/dashboard" element= { <PrivateRoute> <Dashboard/> </PrivateRoute> } />
+                <Route path="/user" element= { <PrivateRoute> <Users/> </PrivateRoute> } />
             </Routes>
 
             <Footer/>
