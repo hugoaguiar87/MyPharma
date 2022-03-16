@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { Navigate } from "react-router-dom"
 
-import { doLogin } from "../../helpers/AuthHandler";
+import { doLogin, isLogged } from "../../helpers/AuthHandler";
 import { requestApi } from "../../helpers/Requests";
 import { ErrorMessage, PageArea } from "./styled";
 
@@ -11,7 +12,11 @@ const Home = () => {
     const [disabled, setDisabled] = useState(false)
     const [error, setError] = useState('')
 
-    const [json, setJson] = useState()
+    const logged = () => {
+        const log = isLogged()
+
+        return (log ? <Navigate to='/dashboard'/> : "")
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -19,22 +24,23 @@ const Home = () => {
         setError('')
 
         const json = await requestApi.login(email, password)
-        setJson(json)
 
         if(json.error){
             setError(json.error)
-        } else {
+        } else if (json.token){
             doLogin(json.token, rememberPassword)
             window.location.href = '/dashboard'
+        } else {
+            setError("Ocorreu algum erro! Tente Novamente")
         }
 
         setDisabled(false)
     }
 
-    console.log(error)
-
     return(
         <PageArea>
+            {logged()}
+
             <div className="container">
                 <h1>Login</h1>
 
@@ -88,6 +94,11 @@ const Home = () => {
                         <button disabled={disabled}>Entrar</button>
                     </label>
                 </form>
+
+                <div className="area">
+                    <div className="area--tittle"></div>
+                    <span>Não é cadastro? <a href="/signup">Cadastre-se</a></span>
+                </div>
             </div>
         </PageArea>
     )
