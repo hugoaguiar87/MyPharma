@@ -136,7 +136,6 @@ const ProductCategory = () => {
                                 <div className="modal--form--title">Nome: </div>
                                 <div className="modal--form--input">
                                     <input 
-                                        type='text'
                                         value={name}
                                         onChange={e => setName(e.target.value)}
                                         disabled={disabled}
@@ -148,7 +147,6 @@ const ProductCategory = () => {
                                 <div className="modal--form--title">Descrição: </div>
                                 <div className="modal--form--input">
                                     <input 
-                                        type='email'
                                         value={description}
                                         onChange={e => setDescription(e.target.value)}
                                         disabled={disabled}
@@ -228,8 +226,8 @@ const ProductCategory = () => {
                     </div>
 
                     {!categories && loading && <div>Carregando...</div>}
-                    {!categories && !loading &&
-                        <h2> Cadastre uma categoria! </h2>
+                    {(categories.length === 0 || !categories) && !loading &&
+                        <h2> Nenhuma categoria encontrada! </h2>
                     }
 
                     <div className="pagination">
