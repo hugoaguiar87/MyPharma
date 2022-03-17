@@ -34,7 +34,7 @@ const Dashboard = () => {
                         </div>
                     </div>
 
-                    <div className="categ--area" onClick={ () => navigate('/') }>
+                    <div className="categ--area" onClick={ () => navigate('/products/categories') }>
                         <h3>CATEGORIAS DE PRODUTOS</h3>
                         <div className="desciption">
                             <ul>

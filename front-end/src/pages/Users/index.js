@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { requestApi } from "../../helpers/Requests";
 
 import { PageArea, UsersArea, EditUserModal, ErrorMessage } from "./styled";
@@ -7,6 +8,7 @@ import Modal from "../../components/Modal";
 const Users = () => {
     const [user, setUser] = useState({})
     const [modalEditUser, setModalEditUser] = useState(false)
+    const navigate = useNavigate()
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -169,7 +171,14 @@ const Users = () => {
                     </label>
                     
                     <div className="area">
-                        <div className="area--title"></div>
+                        <div className="area--title">
+                            <button 
+                                className="info--button"  
+                                onClick={() => navigate("/dashboard")}
+                            >
+                                Voltar
+                            </button>
+                        </div>
                         <div className="area--info">
                             <button 
                                 className="info--button" 

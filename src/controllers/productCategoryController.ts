@@ -61,7 +61,8 @@ export const deleteProductCategory = async (req: Request, res: Response) => {
         }
     }
 
-    res.json({error: "Não autorizado"})
+    // res.json({error: "Não autorizado"})
+    res.json({error: "chatao"})
 }
 
 export const getCategories = async (req: Request, res: Response) => {

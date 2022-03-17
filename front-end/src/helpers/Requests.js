@@ -1,6 +1,6 @@
 import axios from "axios";
 import qs from "qs";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 
 const Api_BASEURL = "http://localhost:5000"
 
@@ -59,6 +59,69 @@ const putEditUser = async (name = null, email = null, password = null) => {
     return req
 }
 
+const getCategories = async (body = []) => {
+    const req = await axios.get(`${Api_BASEURL}/api/categories?${qs.stringify(body)}`)
+        .then(res => res.data)
+        .catch(err => err)
+    
+    return req
+}
+
+const deleteCategory = async (id) => {
+    let token = Cookies.get('token')
+    const header = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    
+    const body = qs.stringify({
+        idCategory: id
+    })
+
+    const req = await axios.delete(`${Api_BASEURL}/api/category/delete`, body, header)
+        .then(res => res.data)
+        .catch(err => err)
+
+    return req
+}
+
+const putCategory = async (idCategory = null, newName = null, newDescription = null) => {
+    let token = Cookies.get('token')
+    const header = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+
+    const body = qs.stringify({ idCategory, newName, newDescription })
+
+    const req = axios.put(`${Api_BASEURL}/api/category/edit`, body, header)
+        .then(res => res.data)
+        .catch(err => err)
+
+    return req
+}
+
+const postCategory = async (name, description) => {
+    let token = Cookies.get('token')
+    const header = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+
+    const body = qs.stringify({
+        name, description
+    })
+
+    const req = await axios.post(`${Api_BASEURL}/api/category/create`, body, header)
+        .then(res => res.data)
+        .catch(err => err)
+
+    return req
+}
+
 export const requestApi = {
     login: (email, password) => {
         return postSingIn(email, password)
@@ -71,5 +134,17 @@ export const requestApi = {
     },
     editUser: (name, email, password) => {
         return putEditUser(name, email, password)
+    },
+    categories: (body) => {
+        return getCategories(body)
+    },
+    delCategory: (id) => {
+        return deleteCategory(id)
+    },
+    editCategory: (idCategory, newName, newDescription) => {
+        return putCategory(idCategory, newName, newDescription)
+    },
+    createCategory: (name, description) => {
+        return postCategory(name, description)
     }
 }

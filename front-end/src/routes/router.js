@@ -8,6 +8,8 @@ import Home from "../pages/Home";
 import Dashboard from "../pages/Dashboard";
 import SignUp from "../pages/SignUp";
 import Users from "../pages/Users";
+import ProductCategory from "../pages/ProductCategory";
+import EditCategory from "../pages/EditCategory";
 
 
 const Router = () => {
@@ -27,6 +29,8 @@ const Router = () => {
                 <Route path="/signup" element= { <SignUp/> } />
                 <Route path="/dashboard" element= { <PrivateRoute> <Dashboard/> </PrivateRoute> } />
                 <Route path="/user" element= { <PrivateRoute> <Users/> </PrivateRoute> } />
+                <Route path="/products/categories" element= { <PrivateRoute> <ProductCategory/> </PrivateRoute> } />
+                <Route path="/products/category/edit/:id" element= { <PrivateRoute> <EditCategory/> </PrivateRoute> } />
             </Routes>
 
             <Footer/>
