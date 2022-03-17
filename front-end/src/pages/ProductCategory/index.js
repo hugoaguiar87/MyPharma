@@ -22,6 +22,10 @@ const ProductCategory = () => {
 
     const [modalSignupCategory, setModalSignupCategory] = useState(false)
 
+    const [categoriesTotal, setCategoriesTotal] = useState(0)
+    const [pageCount, setPageCount] = useState(0)
+    const [currentPage, setCurrentPage] = useState(1)
+
     const [categories, setCategories] = useState('')
     const [order, setOrder] = useState("asc")
     const [loading, setLoading] = useState(false)
@@ -31,14 +35,19 @@ const ProductCategory = () => {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
 
+
     const getCategories = async () => {
+        let offset = (currentPage - 1) * 12
+
         const json = await requestApi.categories({
             sort: order,
             limit: 12,
             searchName,
-            searchDescription
+            searchDescription,
+            offset
         })
         setCategories(json.categories)
+        setCategoriesTotal(json.total)
         setLoading(false)
     }
 
@@ -59,14 +68,27 @@ const ProductCategory = () => {
         }
 
         timer = setTimeout(getCategories, 2000)
+        setCurrentPage(1)
     }, [searchName, searchDescription, order, update])
+
+    useEffect(() => {
+        if(categories.length > 0){
+            setPageCount( Math.ceil( categoriesTotal / categories.length ) )
+        } else {
+            setPageCount(0)
+        }
+    }, [categoriesTotal])
+
+    useEffect(() => {
+        getCategories()
+    }, [currentPage])
     
     const handleDelete = async (id) => {
         const confirm = window.confirm("Confirma a exclusão dessa categoria?")
         
         if(confirm){
             const json = await requestApi.delCategory(id)
-            
+
             if(json.error){
                 return alert("Ocorreu algum erro! Tente novamente.")
             } else if (json.status){
@@ -146,6 +168,11 @@ const ProductCategory = () => {
         )
     }
 
+    let pagination = []
+    for(let i=0; i<pageCount; i++){
+        pagination.push(i+1)
+    }
+
     return(
         <PageArea>
             <CategoryArea>
@@ -204,6 +231,20 @@ const ProductCategory = () => {
                     {!categories && !loading &&
                         <h2> Cadastre uma categoria! </h2>
                     }
+
+                    <div className="pagination">
+                        {pagination.map((i,k)=>{
+                            return(
+                                <button 
+                                    key={k} 
+                                    className={i===currentPage ? "pagItem active" : "pagItem"}
+                                    onClick={() => setCurrentPage(i)}
+                                > 
+                                    {i} 
+                                </button>
+                            )
+                        })}
+                    </div>
                 </div>
 
                 {signupCategory()}

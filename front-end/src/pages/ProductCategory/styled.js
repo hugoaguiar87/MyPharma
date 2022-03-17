@@ -124,6 +124,37 @@ export const CategoryArea = styled.div`
             }
         }
     }
+
+    .pagination{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+        margin: 15px 0;
+
+        .pagItem{
+            cursor: pointer;
+            margin-right: 6px;
+            border:0;
+            height: 30px;
+            width: 30px;
+            border-radius: 10px;
+            background-color: #0089FF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all ease 0.1s;
+            color: white;
+            &:hover{
+                background-color: #006FCE;
+            }
+            &.active{
+                font-weight: bold;
+                background-color: #005AA8;
+            }
+        }
+    }
 `
 
 export const CreateCategoryModal = styled.div`
