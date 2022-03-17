@@ -50,7 +50,7 @@ export const editProductCategory = async (req: Request, res: Response) => {
 
 export const deleteProductCategory = async (req: Request, res: Response) => {
     if(req.headers.authorization){
-        const { idCategory } = req.body
+        const { idCategory } = req.query
         let productCategory = await ProductCategory.findById(idCategory)
 
         if(productCategory){

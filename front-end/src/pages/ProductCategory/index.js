@@ -63,9 +63,10 @@ const ProductCategory = () => {
     
     const handleDelete = async (id) => {
         const confirm = window.confirm("Confirma a exclusão dessa categoria?")
-
+        
         if(confirm){
             const json = await requestApi.delCategory(id)
+            
             if(json.error){
                 return alert("Ocorreu algum erro! Tente novamente.")
             } else if (json.status){

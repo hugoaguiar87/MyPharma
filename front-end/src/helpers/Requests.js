@@ -79,7 +79,7 @@ const deleteCategory = async (id) => {
         idCategory: id
     })
 
-    const req = await axios.delete(`${Api_BASEURL}/api/category/delete`, body, header)
+    const req = await axios.delete(`${Api_BASEURL}/api/category/delete?${body}`, header)
         .then(res => res.data)
         .catch(err => err)
 

@@ -50,7 +50,6 @@ const Dashboard = () => {
                         <div className="desciption">
                             <ul>
                                 <li>Editar</li>
-                                <li>Excluir</li>
                             </ul>
                         </div>
                     </div>                                        
