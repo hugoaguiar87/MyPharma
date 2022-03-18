@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
+import { setDisabled } from "../../redux/reducers/configStatesReducer";
 
 import { doLogin, isLogged } from "../../helpers/AuthHandler";
 import { requestApi } from "../../helpers/Requests";
 import { ErrorMessage, PageArea } from "./styled";
 
 const Home = () => {
+    const disabled = useSelector((state) => state.configStates.disabled)
+    const dispatch = useDispatch()
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [rememberPassword, setRememberPassword] = useState(false)
-    const [disabled, setDisabled] = useState(false)
     const [error, setError] = useState('')
 
     const logged = () => {
@@ -20,7 +24,7 @@ const Home = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setDisabled(true)
+        dispatch( setDisabled(true) )
         setError('')
 
         const json = await requestApi.login(email, password)
@@ -34,7 +38,7 @@ const Home = () => {
             setError("Ocorreu algum erro! Tente Novamente")
         }
 
-        setDisabled(false)
+        dispatch( setDisabled(false) )
     }
 
     return(

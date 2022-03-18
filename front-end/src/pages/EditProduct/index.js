@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import MaskedInput from 'react-text-mask';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
+import { useDispatch, useSelector } from "react-redux";
+import { setUpdate, setDisabled } from "../../redux/reducers/configStatesReducer";
 
 import { requestApi } from "../../helpers/Requests";
 import { EditArea, ErrorMessage, PageArea } from "./styled";
 
 const EditProduct = () => {
+    const dispatch = useDispatch()
     const {id} = useParams()
     const navigate = useNavigate()
 
@@ -23,8 +26,11 @@ const EditProduct = () => {
     const [newCategory, setNewCategory] = useState('')
     const [newBrand, setNewBrand] = useState('')
     const [error, setError] = useState('')
-    const [update, setUpdate] = useState(false)
-    const [disabled, setDisabled] = useState(false)
+    // const [update, setUpdate] = useState(false)
+    // const [disabled, setDisabled] = useState(false)
+
+    const update = useSelector((state) => state.configStates.update)
+    const disabled = useSelector((state) => state.configStates.disabled)
 
     const getAllCategories = async () => {
         const json = await requestApi.categories({
@@ -68,7 +74,7 @@ const EditProduct = () => {
     }, [update])
 
     const handleEditProduct = async () => {
-        setDisabled(true)
+        dispatch(setDisabled(true))
         setError('')
         let priceFormated = newPrice.replace(/\./g, '')
         priceFormated = priceFormated.replace(',', '.')
@@ -76,12 +82,12 @@ const EditProduct = () => {
         const json = await requestApi.editProduct(id, newName, newDescription, priceFormated, newStock, newCategory, newBrand)
         if(json.error){
             setError(json.error)
-            setDisabled(false)
+            dispatch(setDisabled(false))
             return
         } else {
             alert("Produto editado com sucesso!")
-            setUpdate(!update)
-            setDisabled(false)
+            dispatch(setUpdate(!update))
+            dispatch(setDisabled(false))
             setNewName('')
             setNewDescription('')
             setNewPrice('')

@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setUpdate, setDisabled } from "../../redux/reducers/configStatesReducer";
 
 import { requestApi } from "../../helpers/Requests";
 import { EditArea, ErrorMessage, PageArea } from "./styled";
 
 const EditBrand = () => {
+    const dispatch = useDispatch()
     const {id} = useParams()
     const navigate = useNavigate()
 
     const [brandInfos, setBrandInfos] = useState()
     const [newName, setNewName] = useState('')
     const [error, setError] = useState('')
-    const [update, setUpdate] = useState(false)
-    const [disabled, setDisabled] = useState(false)
+
+    const update = useSelector((state) => state.configStates.update)
+    const disabled = useSelector((state) => state.configStates.disabled)
 
     useEffect(() => {
         const loadBrand = async () => {
@@ -23,18 +27,18 @@ const EditBrand = () => {
     }, [update])
 
     const handleEditBrand = async () => {
-        setDisabled(true)
+        dispatch(setDisabled(true))
         setError('')
 
         const json = await requestApi.editBrand(id, newName)
         if(json.error){
             setError(json.error)
-            setDisabled(false)
+            dispatch(setDisabled(false))
             return
         } else {
             alert("Marca editada com sucesso!")
-            setUpdate(!update)
-            setDisabled(false)
+            dispatch(setUpdate(!update))
+            dispatch(setDisabled(false))
             setNewName('')
             return
         }

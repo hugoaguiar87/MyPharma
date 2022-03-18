@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setUpdate, setDisabled } from "../../redux/reducers/configStatesReducer";
 
 import { requestApi } from "../../helpers/Requests";
 import { EditArea, ErrorMessage, PageArea } from "./styled";
 
 const EditCategory = () => {
+    const dispatch = useDispatch()
     const {id} = useParams()
     const navigate = useNavigate()
 
@@ -12,8 +15,9 @@ const EditCategory = () => {
     const [newName, setNewName] = useState('')
     const [newDescription, setNewDescription] = useState('')
     const [error, setError] = useState('')
-    const [update, setUpdate] = useState(false)
-    const [disabled, setDisabled] = useState(false)
+
+    const update = useSelector((state) => state.configStates.update)
+    const disabled = useSelector((state) => state.configStates.disabled)
 
     useEffect(() => {
         const loadCategory = async () => {
@@ -24,18 +28,18 @@ const EditCategory = () => {
     }, [update])
 
     const handleEditCategory = async () => {
-        setDisabled(true)
+        dispatch(setDisabled(true))
         setError('')
 
         const json = await requestApi.editCategory(id, newName, newDescription)
         if(json.error){
             setError(json.error)
-            setDisabled(false)
+            dispatch(setDisabled(false))
             return
         } else {
             alert("Categoria editada com sucesso!")
-            setUpdate(!update)
-            setDisabled(false)
+            dispatch(setUpdate(!update))
+            dispatch(setDisabled(false))
             setNewName('')
             setNewDescription('')
             return
