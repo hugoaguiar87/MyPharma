@@ -106,7 +106,7 @@ export const editProduct = async (req: Request, res: Response) => {
 
 export const deleteProduct = async (req: Request, res: Response) => {
     if(req.headers.authorization){
-        const { idProduct } = req.body
+        const { idProduct } = req.query
 
         let product = await Product.findById(idProduct)
 

@@ -45,7 +45,7 @@ export const EditArea = styled.div`
             overflow-y: auto;
             overflow-x: hidden;
             
-            input, textarea{
+            input{
                 width: 100%;
                 font-size: 15px;
                 padding: 5px;
@@ -56,10 +56,6 @@ export const EditArea = styled.div`
                 &:focus{
                     border: 1px solid black;
                 }
-            }
-            textarea{
-                resize:none;
-                height: 150px;
             }
         }
         button {

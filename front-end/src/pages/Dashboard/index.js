@@ -12,7 +12,7 @@ const Dashboard = () => {
                 <h1>Dashboard</h1>
 
                 <div className="options--area">
-                    <div className="categ--area" onClick={ () => navigate('/') }>
+                    <div className="categ--area" onClick={ () => navigate('/products') }>
                         <h3>PRODUTOS</h3>
                         <div className="desciption">
                             <ul>

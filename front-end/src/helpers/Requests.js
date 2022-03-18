@@ -183,6 +183,50 @@ const putBrand = async (idBrand, newName) => {
     return req
 }
 
+const getProducts = async (body) => {
+    const req = await axios.get(`${Api_BASEURL}/api/products?${qs.stringify(body)}`)
+        .then(res => res.data)
+        .catch(err => err)
+    
+    return req
+}
+
+const deleteProduct = async (id) => {
+    let token = Cookies.get('token')
+    const header = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    
+    const body = qs.stringify({
+        idProduct: id
+    })
+
+    const req = await axios.delete(`${Api_BASEURL}/api/product/delete?${body}`, header)
+        .then(res => res.data)
+        .catch(err => err)
+
+    return req
+}
+
+const postProduct = async (name, description, price, stock, category, brand) => {
+    let token = Cookies.get('token')
+    const header = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+
+    const body = qs.stringify({ name, description, price, stock, category, brand })
+
+    const req = await axios.post(`${Api_BASEURL}/api/product/create`, body, header)
+        .then(res => res.data)
+        .catch(err => err)
+
+    return req
+}
+
 export const requestApi = {
     login: (email, password) => {
         return postSingIn(email, password)
@@ -219,5 +263,14 @@ export const requestApi = {
     },
     editBrand: (idBrand, newName) => {
         return putBrand(idBrand, newName)
+    },
+    products: (body) => {
+        return getProducts(body)
+    },
+    delProduct: (id) => {
+        return deleteProduct(id)
+    },
+    createProduct: (name, description, price, stock, category, brand) => {
+        return postProduct(name, description, price, stock, category, brand)
     }
 }
