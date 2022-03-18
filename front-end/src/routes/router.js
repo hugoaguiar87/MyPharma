@@ -14,6 +14,7 @@ import Brands from "../pages/Brands";
 import EditBrand from "../pages/EditBrand";
 import Products from "../pages/Products";
 import EditProduct from "../pages/EditProduct";
+import NotFound from "../pages/NotFound";
 
 
 const Router = () => {
@@ -39,6 +40,8 @@ const Router = () => {
                 <Route path="/brands/edit/:id" element={ <PrivateRoute> <EditBrand/> </PrivateRoute> } />
                 <Route path="/products" element={ <PrivateRoute> <Products/> </PrivateRoute> } /> 
                 <Route path="/products/edit/:id" element= { <PrivateRoute> <EditProduct/> </PrivateRoute> } />
+
+                <Route path="*" element={ <NotFound/> } />
             </Routes>
 
             <Footer/>
