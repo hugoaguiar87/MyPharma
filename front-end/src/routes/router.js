@@ -10,6 +10,8 @@ import SignUp from "../pages/SignUp";
 import Users from "../pages/Users";
 import ProductCategory from "../pages/ProductCategory";
 import EditCategory from "../pages/EditCategory";
+import Brands from "../pages/Brands";
+import EditBrand from "../pages/EditBrand";
 
 
 const Router = () => {
@@ -31,6 +33,8 @@ const Router = () => {
                 <Route path="/user" element= { <PrivateRoute> <Users/> </PrivateRoute> } />
                 <Route path="/products/categories" element= { <PrivateRoute> <ProductCategory/> </PrivateRoute> } />
                 <Route path="/products/category/edit/:id" element= { <PrivateRoute> <EditCategory/> </PrivateRoute> } />
+                <Route path="/brands" element={ <PrivateRoute> <Brands/> </PrivateRoute> } />
+                <Route path="/brands/edit/:id" element={ <PrivateRoute> <EditBrand/> </PrivateRoute> } />
             </Routes>
 
             <Footer/>

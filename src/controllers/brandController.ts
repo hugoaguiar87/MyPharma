@@ -41,7 +41,7 @@ export const editBrand = async (req: Request, res: Response) => {
 
 export const deleteBrand = async (req: Request, res: Response) => {
     if(req.headers.authorization){
-        const { idBrand } = req.body
+        const { idBrand } = req.query
 
         let brand = await Brand.findById(idBrand)
 

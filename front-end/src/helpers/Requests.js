@@ -122,6 +122,50 @@ const postCategory = async (name, description) => {
     return req
 }
 
+const getBrands = async (body = []) => {
+    const req = await axios.get(`${Api_BASEURL}/api/brands?${qs.stringify(body)}`)
+        .then(res => res.data)
+        .catch(err => err)
+    
+    return req
+}
+
+const deleteBrand = async (id) => {
+    let token = Cookies.get('token')
+    const header = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    
+    const body = qs.stringify({
+        idBrand: id
+    })
+
+    const req = await axios.delete(`${Api_BASEURL}/api/brand/delete?${body}`, header)
+        .then(res => res.data)
+        .catch(err => err)
+
+    return req
+}
+
+const postBrand = async (name) => {
+    let token = Cookies.get('token')
+    const header = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+
+    const body = qs.stringify({ name })
+
+    const req = await axios.post(`${Api_BASEURL}/api/brand/create`, body, header)
+        .then(res => res.data)
+        .catch(err => err)
+
+    return req
+}
+
 export const requestApi = {
     login: (email, password) => {
         return postSingIn(email, password)
@@ -146,5 +190,14 @@ export const requestApi = {
     },
     createCategory: (name, description) => {
         return postCategory(name, description)
+    },
+    brands: (body) => {
+        return getBrands(body)
+    },
+    delBrand: (id) => {
+        return deleteBrand(id)
+    },
+    createBrand: (name) => {
+        return postBrand(name)
     }
 }

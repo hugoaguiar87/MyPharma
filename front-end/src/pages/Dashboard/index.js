@@ -23,7 +23,7 @@ const Dashboard = () => {
                         </div>
                     </div>    
 
-                    <div className="categ--area" onClick={ () => navigate('/') }>
+                    <div className="categ--area" onClick={ () => navigate('/brands') }>
                         <h3>MARCAS</h3>
                         <div className="desciption">
                             <ul>
