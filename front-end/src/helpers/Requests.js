@@ -166,6 +166,23 @@ const postBrand = async (name) => {
     return req
 }
 
+const putBrand = async (idBrand, newName) => {
+    let token = Cookies.get('token')
+    const header = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+
+    const body = qs.stringify({ idBrand, newName })
+
+    const req = axios.put(`${Api_BASEURL}/api/brand/edit`, body, header)
+        .then(res => res.data)
+        .catch(err => err)
+
+    return req
+}
+
 export const requestApi = {
     login: (email, password) => {
         return postSingIn(email, password)
@@ -199,5 +216,8 @@ export const requestApi = {
     },
     createBrand: (name) => {
         return postBrand(name)
+    },
+    editBrand: (idBrand, newName) => {
+        return putBrand(idBrand, newName)
     }
 }

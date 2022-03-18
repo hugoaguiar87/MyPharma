@@ -42,8 +42,6 @@ const EditCategory = () => {
         }
     }
 
-    console.log(categoryInfos)
-
     return (
         <PageArea>
             <EditArea>
@@ -93,7 +91,7 @@ const EditCategory = () => {
                             </div>
                             <div className="area--title"></div>
                             <div className="area--input">
-                                <button onClick={() => handleEditCategory()}>Editar Anúncio</button>
+                                <button onClick={() => handleEditCategory()}>Editar Categoria</button>
                             </div>
                         </label>
                     </div>

@@ -57,12 +57,16 @@ export const deleteBrand = async (req: Request, res: Response) => {
 }
 
 export const getBrands = async (req: Request, res: Response) => {
-    let { sort = "asc", offset = 0, limit = 20, search } = req.query
+    let { sort = "asc", offset = 0, limit = 20, search, id } = req.query
     let filters = {} as any
     let total = 0
 
     if(search){
         filters.name = {'$regex': search, '$options': 'i'}
+    }
+
+    if(id){
+        filters._id = id
     }
 
     const brandsTotal = await Brand.find(filters)
