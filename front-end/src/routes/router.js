@@ -13,6 +13,7 @@ import EditCategory from "../pages/EditCategory";
 import Brands from "../pages/Brands";
 import EditBrand from "../pages/EditBrand";
 import Products from "../pages/Products";
+import EditProduct from "../pages/EditProduct";
 
 
 const Router = () => {
@@ -37,7 +38,7 @@ const Router = () => {
                 <Route path="/brands" element={ <PrivateRoute> <Brands/> </PrivateRoute> } />
                 <Route path="/brands/edit/:id" element={ <PrivateRoute> <EditBrand/> </PrivateRoute> } />
                 <Route path="/products" element={ <PrivateRoute> <Products/> </PrivateRoute> } /> 
-                <Route path="/products/edit/:id" />
+                <Route path="/products/edit/:id" element= { <PrivateRoute> <EditProduct/> </PrivateRoute> } />
             </Routes>
 
             <Footer/>

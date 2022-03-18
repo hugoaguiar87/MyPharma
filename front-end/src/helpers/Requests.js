@@ -227,6 +227,23 @@ const postProduct = async (name, description, price, stock, category, brand) => 
     return req
 }
 
+const putProduct = async (idProduct, newName, newDescription, newPrice, newStock, newCategory, newBrand ) => {
+    let token = Cookies.get('token')
+    const header = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+
+    const body = qs.stringify({ idProduct, newName, newDescription, newPrice, newStock, newCategory, newBrand })
+
+    const req = axios.put(`${Api_BASEURL}/api/product/edit`, body, header)
+        .then(res => res.data)
+        .catch(err => err)
+
+    return req
+}
+
 export const requestApi = {
     login: (email, password) => {
         return postSingIn(email, password)
@@ -272,5 +289,8 @@ export const requestApi = {
     },
     createProduct: (name, description, price, stock, category, brand) => {
         return postProduct(name, description, price, stock, category, brand)
+    },
+    editProduct: (idProduct, newName, newDescription, newPrice, newStock, newCategory, newBrand ) => {
+        return putProduct(idProduct, newName, newDescription, newPrice, newStock, newCategory, newBrand )
     }
 }
