@@ -106,7 +106,7 @@ export const editProduct = async (req: Request, res: Response) => {
 
 export const deleteProduct = async (req: Request, res: Response) => {
     if(req.headers.authorization){
-        const { idProduct } = req.body
+        const { idProduct } = req.query
 
         let product = await Product.findById(idProduct)
 
@@ -122,7 +122,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
 }
 
 export const getProducts = async (req: Request, res: Response) => {
-    let { sort = "asc", offset = 0, limit = 20, searchName, searchDescription, brand, category } = req.query
+    let { sort = "asc", offset = 0, limit = 20, searchName, searchDescription, brand, category, id } = req.query
     let filters = {} as any
     let total = 0
 
@@ -140,6 +140,10 @@ export const getProducts = async (req: Request, res: Response) => {
 
     if(category){
         filters.category = category
+    }
+
+    if(id){
+        filters._id = id
     }
 
     const productsTotal = await Product.find(filters)

@@ -50,7 +50,7 @@ export const editProductCategory = async (req: Request, res: Response) => {
 
 export const deleteProductCategory = async (req: Request, res: Response) => {
     if(req.headers.authorization){
-        const { idCategory } = req.body
+        const { idCategory } = req.query
         let productCategory = await ProductCategory.findById(idCategory)
 
         if(productCategory){
@@ -61,11 +61,12 @@ export const deleteProductCategory = async (req: Request, res: Response) => {
         }
     }
 
-    res.json({error: "Não autorizado"})
+    // res.json({error: "Não autorizado"})
+    res.json({error: "chatao"})
 }
 
 export const getCategories = async (req: Request, res: Response) => {
-    let { sort = "asc", offset = 0, limit = 20, searchName, searchDescription } = req.query
+    let { sort = "asc", offset = 0, limit = 20, searchName, searchDescription, id } = req.query
     let filters = {} as any
     let total = 0
 
@@ -75,6 +76,10 @@ export const getCategories = async (req: Request, res: Response) => {
 
     if(searchDescription){
         filters.description = {'$regex': searchDescription, '$options': 'i'}
+    }
+
+    if(id){
+        filters._id = id
     }
 
     const categoriesTotal = await ProductCategory.find(filters)
