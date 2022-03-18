@@ -25,7 +25,7 @@ export const UsersArea = styled.div`
         padding: 10px;
         box-shadow: 0px 0px 5px #999;
         width: 500px;
-        height: 300px;
+        min-height: 300px;
 
         .area{
             display: flex;
@@ -66,6 +66,24 @@ export const UsersArea = styled.div`
 
         &:active{
             background-color: #999;
+        }
+    }
+
+    @media (max-width: 700px){
+        .infos{
+            width: 97vw;
+        }
+        .area{
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .area--title{
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 15px;
         }
     }
 `

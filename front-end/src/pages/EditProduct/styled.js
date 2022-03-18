@@ -77,6 +77,24 @@ export const EditArea = styled.div`
             }
         }
     }
+
+    @media (max-width: 700px){
+        .form{
+            width: 97vw;
+            .area{
+                flex-direction: column;
+            }
+            .area--title{
+                text-align: center;
+                margin-bottom: 10px;
+            }
+            .area--input{
+                width: 100%;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+        }
+    }
 `
 
 export const ErrorMessage = styled.div`

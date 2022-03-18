@@ -21,7 +21,7 @@ export const DashArea = styled.div`
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
-        height: 60vh;
+        min-height: 60vh;
     }
 
     .categ--area{

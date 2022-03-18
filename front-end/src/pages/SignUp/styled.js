@@ -66,6 +66,25 @@ export const PageArea = styled.div`
             }
         }
     }
+
+    @media (max-width: 700px) {
+        .container {
+            min-width: 90vw;
+            .area{
+                flex-direction: column;
+                justify-content: center;
+                max-width: 90vw;
+            }
+            .area--tittle{
+                width: 100%;
+                text-align: center;
+                margin-bottom: 5px;
+            }
+            .area--input{
+                width: 90vw;
+            }
+        }
+    }
 `
 
 export const ErrorMessage = styled.div`

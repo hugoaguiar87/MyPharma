@@ -171,6 +171,12 @@ export const CategoryArea = styled.div`
             }
         }
     }
+
+    @media (max-width: 700px){
+        .search{
+            flex-direction: column;
+        }
+    }
 `
 
 export const CreateCategoryModal = styled.div`

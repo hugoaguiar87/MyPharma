@@ -46,5 +46,10 @@ export const HeaderArea = styled.div`
         }
     }
 
+    @media (max-width: 700px){
+        .container{
+            margin: 0 15px;
+        }
+    }
 
 `

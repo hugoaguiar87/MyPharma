@@ -7,7 +7,7 @@ export const PageArea = styled.div`
 export const EditArea = styled.div`
     max-width: 1200px;
     margin: auto;
-    height: 82vh;
+    min-height: 82vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -25,6 +25,7 @@ export const EditArea = styled.div`
         padding: 10px;
         box-shadow: 0px 0px 5px #999;
         width: 700px;
+        margin-bottom: 15px;
 
         .area{
             display: flex;
@@ -73,6 +74,24 @@ export const EditArea = styled.div`
             cursor: pointer;
             &:hover{
                 background-color: #006FCE ;
+            }
+        }
+    }
+
+    @media (max-width: 700px){
+        .form{
+            width: 97vw;
+            .area{
+                flex-direction: column;
+            }
+            .area--title{
+                text-align: center;
+                margin-bottom: 10px;
+            }
+            .area--input{
+                width: 100%;
+                text-align: center;
+                margin-bottom: 15px;
             }
         }
     }
