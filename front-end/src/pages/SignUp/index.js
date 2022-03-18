@@ -1,22 +1,28 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setDisabled } from "../../redux/reducers/configStatesReducer";
+
 import { requestApi } from "../../helpers/Requests";
 import { PageArea, ErrorMessage } from "./styled";
 
 const SignUp = () => {
+    const dispatch = useDispatch()
+
+    const disabled = useSelector((state) => state.configStates.disabled)
+
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPasswor] = useState('')
     const [error, setError] = useState(false)
-    const [disabled, setDisabled] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setDisabled(true)
+        dispatch(setDisabled(true))
         setError('')
 
         if(password !== confirmPassword){
-            setDisabled(false)
+            dispatch(setDisabled(false))
             return setError('Senhas diferentes!')
         }
 
@@ -31,7 +37,7 @@ const SignUp = () => {
             setError("Ocorreu algum erro! Tente Novamente")
         }
 
-        setDisabled(false)
+        dispatch(setDisabled(false))
     }
 
     return (

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setOrder, setUpdate, setDisabled } from "../../redux/reducers/configStatesReducer";
 
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -10,6 +12,7 @@ import Modal from "../../components/Modal";
 
 let timer
 const ProductCategory = () => {
+    const dispatch = useDispatch()
     const urlParams = useLocation()
     const useQueryString = () => {
         return new URLSearchParams(urlParams.search)
@@ -26,11 +29,12 @@ const ProductCategory = () => {
     const [pageCount, setPageCount] = useState(0)
     const [currentPage, setCurrentPage] = useState(1)
 
+    const order = useSelector((state) => state.configStates.order)
+    const update = useSelector((state) => state.configStates.update)
+    const disabled = useSelector((state) => state.configStates.disabled)
+
     const [categories, setCategories] = useState('')
-    const [order, setOrder] = useState("asc")
     const [loading, setLoading] = useState(false)
-    const [update, setUpdate] = useState(false)
-    const [disabled, setDisabled] = useState(false)
     const [error, setError] = useState('')
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
@@ -93,7 +97,7 @@ const ProductCategory = () => {
                 return alert("Ocorreu algum erro! Tente novamente.")
             } else if (json.status){
                 alert("Categoria excluída com sucesso!")
-                setUpdate(!update)
+                dispatch(setUpdate(!update))
                 return
             } else{
                 return alert("Ocorreu algum erro! Tente novamente.")
@@ -103,20 +107,20 @@ const ProductCategory = () => {
 
     const signupCategory = () => {
         const handleSubmit = async () => {
-            setDisabled(true)
+            dispatch(setDisabled(true))
             setError('')
             let json
 
             json = await requestApi.createCategory(name, description)
             if(json.error){
                 setError(json.error)
-                setDisabled(false)
+                dispatch(setDisabled(false))
                 return
             } else {
                 alert("Categoria cadastrada com sucesso!")
                 setModalSignupCategory(false)
-                setUpdate(!update)
-                setDisabled(false)
+                dispatch(setUpdate(!update))
+                dispatch(setDisabled(false))
                 setName('')
                 setDescription('')
                 return
@@ -188,7 +192,7 @@ const ProductCategory = () => {
                 <div className="body">
                     <div className="order">
                         <span>Ordenação: </span>
-                        <select value={order} onChange={(e) => setOrder(e.target.value)} >
+                        <select value={order} onChange={(e) => dispatch(setOrder(e.target.value)) } >
                             <option value="asc">Crescente</option>
                             <option value="desc">Decrescente</option>
                         </select>

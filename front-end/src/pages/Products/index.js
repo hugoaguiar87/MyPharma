@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import MaskedInput from 'react-text-mask';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
+import { useDispatch, useSelector } from "react-redux";
+import { setOrder, setUpdate, setDisabled } from "../../redux/reducers/configStatesReducer";
 
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -12,6 +14,7 @@ import Modal from "../../components/Modal";
 
 let timer
 const Products = () => {
+    const dispatch = useDispatch()
     const urlParams = useLocation()
     const useQueryString = () => {
         return new URLSearchParams(urlParams.search)
@@ -35,11 +38,12 @@ const Products = () => {
     const [brandsTotal, setBrandsTotal] = useState(0)
     const [allBrands, setAllBrands] = useState()
 
+    const order = useSelector((state) => state.configStates.order)
+    const update = useSelector((state) => state.configStates.update)
+    const disabled = useSelector((state) => state.configStates.disabled)
+
     const [products, setProducts] = useState('')
-    const [order, setOrder] = useState("asc")
     const [loading, setLoading] = useState(false)
-    const [update, setUpdate] = useState(false)
-    const [disabled, setDisabled] = useState(false)
     const [error, setError] = useState('')
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
@@ -147,7 +151,7 @@ const Products = () => {
                 return alert("Ocorreu algum erro! Tente novamente.")
             } else if (json.status){
                 alert("Produto excluído com sucesso!")
-                setUpdate(!update)
+                dispatch(setUpdate(!update))
                 return
             } else{
                 return alert("Ocorreu algum erro! Tente novamente.")
@@ -157,7 +161,7 @@ const Products = () => {
 
     const signupProduct = () => {
         const handleSubmit = async () => {
-            setDisabled(true)
+            dispatch(setDisabled(true))
             setError('')
             let priceFormated = price.replace(/\./g, '')
             priceFormated = priceFormated.replace(',', '.')
@@ -165,13 +169,13 @@ const Products = () => {
             const json = await requestApi.createProduct(name, description, priceFormated, stock, categoryProductSignup, brandProductSignup)
             if(json.error){
                 setError(json.error)
-                setDisabled(false)
+                dispatch(setDisabled(false))
                 return
             } else {
                 alert("Produto cadastrado com sucesso!")
                 setModalSignupProduct(false)
-                setUpdate(!update)
-                setDisabled(false)
+                dispatch(setUpdate(!update))
+                dispatch(setDisabled(false))
                 setName('')
                 setDescription('')
                 setPrice('')
@@ -311,8 +315,6 @@ const Products = () => {
         pagination.push(i+1)
     }
 
-    console.log(products)
-
     return(
         <PageArea>
             <CategoryArea>
@@ -330,7 +332,7 @@ const Products = () => {
                 <div className="body">
                     <div className="order">
                         <span>Ordenação: </span>
-                        <select value={order} onChange={(e) => setOrder(e.target.value)} >
+                        <select value={order} onChange={(e) => dispatch(setOrder(e.target.value))} >
                             <option value="asc">Crescente</option>
                             <option value="desc">Decrescente</option>
                         </select>

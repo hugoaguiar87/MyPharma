@@ -1,23 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setUpdate, setDisabled } from "../../redux/reducers/configStatesReducer";
 import { requestApi } from "../../helpers/Requests";
 
 import { PageArea, UsersArea, EditUserModal, ErrorMessage } from "./styled";
 import Modal from "../../components/Modal";
 
 const Users = () => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
     const [user, setUser] = useState({})
     const [modalEditUser, setModalEditUser] = useState(false)
-    const navigate = useNavigate()
+    
+    const update = useSelector((state) => state.configStates.update)
+    const disabled = useSelector((state) => state.configStates.disabled)
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [newEmail, setNewEmail] = useState('')
     const [newPassword, setNewPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-    const [disabled, setDisabled] = useState(false)
     const [error, setError] = useState('')
-    const [update, setUpdate] = useState(false)
 
     useEffect(() => {
         const loadUser = async () => {
@@ -32,7 +37,7 @@ const Users = () => {
 
     const editUser = () => {
         const handleSubmit = async () => {
-            setDisabled(true)
+            dispatch(setDisabled(true))
             setError('')
             let json
 
@@ -42,12 +47,12 @@ const Users = () => {
 
                     if(json.error){
                         setError(json.error)
-                        setDisabled(false)
+                        dispatch(setDisabled(false))
                         return
                     } else{
                         setModalEditUser(false)
-                        setUpdate(!update)
-                        setDisabled(false)
+                        dispatch(setUpdate(!update))
+                        dispatch(setDisabled(false))
                         setNewEmail('')
                         setNewPassword('')
                         setConfirmPassword('')
@@ -55,7 +60,7 @@ const Users = () => {
                     }
                 } else{
                     setError('Senhas diferentes!')
-                    setDisabled(false)
+                    dispatch(setDisabled(false))
                     return
                 }
             }
@@ -63,12 +68,12 @@ const Users = () => {
             json = await requestApi.editUser(name, newEmail)
             if(json.error){
                 setError(json.error)
-                setDisabled(false)
+                dispatch(setDisabled(false))
                 return
             } else {
                 setModalEditUser(false)
-                setUpdate(!update)
-                setDisabled(false)
+                dispatch(setUpdate(!update))
+                dispatch(setDisabled(false))
                 setNewEmail('')
                 return
             }            
