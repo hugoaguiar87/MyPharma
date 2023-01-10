@@ -59,12 +59,12 @@
 
 <h2 align="center">Como utilizar a aplicação 🤔</h2>
 
-> - ## Api / Back-End (Deploy no Heroku)
-> - ### [https://mypharma-app.herokuapp.com/](https://mypharma-app.herokuapp.com/)
+> - ## Api / Back-End (Deploy no Railway)
+> - ### [https://mypharma.up.railway.app/](https://mypharma.up.railway.app/)
 > - /api/ping -> endpoint teste
 
 > - ## Aplicação / Front-End (Deploy no Surge)
-> - ### [https://mypharma-app.surge.sh/](https://mypharma-app.surge.sh/)
+> - ### [https://nice-month.surge.sh/](https://nice-month.surge.sh/)
 > - Email: teste@teste.com
 > - Senha: 1234
 
