@@ -5,7 +5,7 @@
 
 ---
 > - ### Projeto Full Stack.
-> - ### Teste técnico processo seletivo MyPharma.
+> - ### Sistema de gestão de produtos.
 ---
 <h2 align="center">Tecnologias e Bibliotecas Utilizadas 📱</h2>
 
